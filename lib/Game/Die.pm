@@ -18,11 +18,7 @@ has _roller  =>  (
   is      =>  'ro',
   builder =>  sub {
                 my ($self) = @_;
-                my $prng = $PRNG_CLASS->new(1, $self->sides);
-                if ($self->has_seed) {
-                  $prng->seed($self->seed);
-                }
-                return $prng;
+                return $PRNG_CLASS->new(1, $self->sides);
               },
 );
 
