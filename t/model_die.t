@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use Test::More;
 use Test::Exception;
+use Test::Warnings;
 
 my $TEST_CLASS = qw(Game::Die);
 my $N_DICE = 4;
