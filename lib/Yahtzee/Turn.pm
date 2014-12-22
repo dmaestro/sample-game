@@ -55,3 +55,21 @@ Yahtzee::Turn;
 This class represents the rules for taking a single turn at the
 game of Yahtzee. It provides methods for viewing the individual
 dice, category matched, and other information useful for scoring.
+
+=head1 BUGS AND LIMITATIONS
+
+No known bugs. If you find one, please create an issue.
+
+=head1 AUTHOR
+
+Douglas L. Schrag
+
+C<doug@theschrags.net>
+
+=head1 LICENSE AND COPYRIGHT
+
+This software is Copyright (c) 2014 by Douglas L. Schrag
+
+This is free software, licensed under:
+
+The Artistic License, Version 2.0, 2006
