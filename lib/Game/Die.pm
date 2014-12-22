@@ -44,8 +44,9 @@ my $seed;
 sub seed {
   my ($class, $integer) = @_;
   if (defined $integer) {
+    DLS::MooTypes::Integer()->($integer);
     die 'Seed must be a positive integer!'  ## no critic (RequireCarping)
-      if not (DLS::MooTypes::Integer()->($integer) and $integer > 0);
+      if not ($integer > 0);
     # ignore if the seed has already been set
     $seed //= $PRNG_CLASS->seed($integer) || 0; # guard for absence of return value
   }
