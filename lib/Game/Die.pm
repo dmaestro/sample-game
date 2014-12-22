@@ -15,15 +15,19 @@ has sides => (
 );
 
 has _roller  =>  (
-  is      =>  'ro',
+  is      =>  'lazy', # one of ->sides or ->_roller MUST be lazy
   builder =>  sub {
                 my ($self) = @_;
-                return $PRNG_CLASS->new(1, $self->sides);
+                my $prng = $PRNG_CLASS->new(1, $self->sides);
+                if ($self->has_seed) {
+                  $prng->seed($self->seed);
+                }
+                return $prng;
               },
 );
 
 has spots => (
-  is        =>  'ro',
+  is        =>  'lazy',
   builder   =>  sub { my ($self) = @_; $self->_roller->next; },
   clearer   =>  'roll',
   predicate =>  1,
