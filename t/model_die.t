@@ -13,12 +13,12 @@ my $N_DICE = 4;
 use_ok($TEST_CLASS);
 
 lives_ok(sub { $TEST_CLASS->seed(25) },
-                                'set a seed value for testing');
+                                                        'set a seed value for testing');
 
 my @dice;
 for (1..$N_DICE) {
   lives_ok(sub { push @dice, $TEST_CLASS->new(); },
-                                "create $_ of $N_DICE dice");
+                                                        "create $_ of $N_DICE dice");
 }
 
 my @individual_dice;
@@ -31,14 +31,11 @@ for my $die (@dice) {
   push @individual_dice, \@rolls;
 }
 
-use Data::Dumper;
-warn Dumper(@individual_dice);
-
 while (@individual_dice) {
   my $test = shift(@individual_dice);
   for my $comp (@individual_dice) {
     no warnings qw(once);
-    ok(any { $_ } (pairwise { $a ne $b } @{ $test }, @{ $comp }),
+    ok( (any { $_ } (pairwise { $a ne $b } @{ $test }, @{ $comp })),
                                                         'series of rolls differs for die '
                                                         .($N_DICE - @individual_dice))
       ||  diag(show_array($test)
