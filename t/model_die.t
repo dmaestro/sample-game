@@ -7,6 +7,7 @@ use Test::Exception;
 use Test::Warnings;
 use List::MoreUtils qw(any pairwise);
 
+## no critic (MagicNumbers)
 my $TEST_CLASS = qw(Game::Die);
 my $N_DICE = 4;
 
@@ -32,8 +33,9 @@ for my $die (@dice) {
 }
 
 while (@individual_dice) {
-  my $test = shift(@individual_dice);
+  my $test = shift @individual_dice;
   for my $comp (@individual_dice) {
+    ## no critic (ProhibitParens, ProhibitNoWarnings)
     no warnings qw(once);
     ok( (any { $_ } (pairwise { $a ne $b } @{ $test }, @{ $comp })),
                                                         'series of rolls differs for die '

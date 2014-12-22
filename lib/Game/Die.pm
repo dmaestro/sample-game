@@ -63,6 +63,14 @@ Game::Die
 
 =head1 SYNOPSIS
 
+    use Game::Die;
+    my @dice = map { Game::Die->new() } 1 .. 2;
+    my $throw;
+    for my $die (@dice) {
+      $die->roll;
+      $throw += $die->spots;
+    }
+
 =head1 VERSION
 
 =head1 DESCRIPTION
@@ -74,6 +82,16 @@ This class simulates a single die, as used in dice games.
 =head2 new [ options ... ]
 
 Create a new die. By default, this is a conventional six-sided die.
+
+=head3 Options
+
+=over 4
+
+=item sides
+
+Specify the number of faces the die has (default 6).
+
+=back
 
 =head1 INSTANCE METHODS
 
@@ -111,6 +129,20 @@ Be wary of conflicting uses of perl's built-in random number generator
 
 'Seed must be a positive integer!' - An attempt was made to set the PRNG seed
 using something that doesn't look like a positive integer.
+
+=head1 DEPENDENCIES
+
+    DLS::MooTypes
+    Math::Random::OO
+    Moo
+    namespace::clean
+
+For testing:
+
+    List::MoreUtils
+    Test::Exception
+    Test::More
+    Test::Warnings
 
 =head1 BUGS AND LIMITATIONS
 
