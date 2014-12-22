@@ -15,7 +15,8 @@ for (1..$N_DICE) {
 }
 
 my @individual_dice;
-$TEST_CLASS->seed(25);
+lives_ok(sub { $TEST_CLASS->seed(25) },
+                                'set a seed value for testing');
 for my $die (@dice) {
   my @rolls;
   for (1..3) {
