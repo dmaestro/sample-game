@@ -10,7 +10,7 @@ use DLS::MooTypes;
 use namespace::clean;
 
 has sides => (
-  is      =>  'lazy',
+  is      =>  'ro',
   default =>  sub { 6 }, ## no critic (MagicNumber)
 );
 
@@ -18,11 +18,7 @@ has _roller  =>  (
   is      =>  'lazy', # one of ->sides or ->_roller MUST be lazy
   builder =>  sub {
                 my ($self) = @_;
-                my $prng = $PRNG_CLASS->new(1, $self->sides);
-                if (defined $self->seed) {
-                  $prng->seed($self->seed);
-                }
-                return $prng;
+                return $PRNG_CLASS->new(1, $self->sides);
               },
 );
 
