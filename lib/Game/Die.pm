@@ -10,7 +10,7 @@ use DLS::MooTypes;
 use namespace::clean;
 
 has sides => (
-  is      =>  'ro',
+  is      =>  'lazy',
   default =>  sub { 6 }, ## no critic (MagicNumber)
 );
 
@@ -19,7 +19,7 @@ has _roller  =>  (
   builder =>  sub {
                 my ($self) = @_;
                 my $prng = $PRNG_CLASS->new(1, $self->sides);
-                if ($self->has_seed) {
+                if (defined $self->seed) {
                   $prng->seed($self->seed);
                 }
                 return $prng;

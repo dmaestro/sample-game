@@ -1,12 +1,19 @@
 #!/usr/bin/env perl
+use strict;
+use warnings;
+
 use Test::More;
 use Test::Exception;
 use Test::Warnings;
+use List::MoreUtils qw(any pairwise);
 
 my $TEST_CLASS = qw(Game::Die);
 my $N_DICE = 4;
 
 use_ok($TEST_CLASS);
+
+lives_ok(sub { $TEST_CLASS->seed(25) },
+                                'set a seed value for testing');
 
 my @dice;
 for (1..$N_DICE) {
@@ -15,8 +22,6 @@ for (1..$N_DICE) {
 }
 
 my @individual_dice;
-lives_ok(sub { $TEST_CLASS->seed(25) },
-                                'set a seed value for testing');
 for my $die (@dice) {
   my @rolls;
   for (1..3) {
@@ -26,4 +31,26 @@ for my $die (@dice) {
   push @individual_dice, \@rolls;
 }
 
+use Data::Dumper;
+warn Dumper(@individual_dice);
+
+while (@individual_dice) {
+  my $test = shift(@individual_dice);
+  for my $comp (@individual_dice) {
+    no warnings qw(once);
+    ok(any { $_ } (pairwise { $a ne $b } @{ $test }, @{ $comp }),
+                                                        'series of rolls differs for die '
+                                                        .($N_DICE - @individual_dice))
+      ||  diag(show_array($test)
+                . ' => '
+                . join(q{, }, map { show_array($_) } @individual_dice)
+          );
+  }
+}
+
 done_testing;
+
+sub show_array {
+  my ($ref) = @_;
+  return '[' . join(q{,}, @{$ref}) . ']';
+}
