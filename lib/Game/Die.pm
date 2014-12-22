@@ -15,7 +15,7 @@ has sides => (
 );
 
 has _roller  =>  (
-  is      =>  'ro',
+  is      =>  'lazy', # one of ->sides or ->_roller MUST be lazy
   builder =>  sub {
                 my ($self) = @_;
                 return $PRNG_CLASS->new(1, $self->sides);
@@ -23,7 +23,7 @@ has _roller  =>  (
 );
 
 has spots => (
-  is        =>  'ro',
+  is        =>  'lazy',
   builder   =>  sub { my ($self) = @_; $self->_roller->next; },
   clearer   =>  'roll',
   predicate =>  1,
